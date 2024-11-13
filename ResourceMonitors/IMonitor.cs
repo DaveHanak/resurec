@@ -7,11 +7,8 @@ using System.Threading.Tasks;
 
 namespace resurec.ResourceMonitors
 {
-    public class SoftwareMonitor : IMonitor<SoftwareReport>
+    public interface IMonitor<TReport> where TReport : IReport
     {
-        public SoftwareReport CreateReport()
-        {
-            throw new NotImplementedException();
-        }
+        TReport CreateReport();
     }
 }

@@ -4,13 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace resurec.ResourceMonitors
+namespace resurec.Models.Reports
 {
     /// <summary>
-    /// Magic stuff
+    /// Groups all Report types together.
     /// </summary>
-    public class ResourceMonitor
+    public interface IReport
     {
-
     }
 }

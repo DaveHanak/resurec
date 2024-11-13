@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace resurec.Models.Reports
 {
-    public class ProcessReport
+    public class ProcessReport : IReport
     {
     }
 }

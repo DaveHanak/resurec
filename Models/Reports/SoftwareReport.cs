@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace resurec.Models.Reports
 {
-    public class SoftwareReport
+    public class SoftwareReport : IReport
     {
         private readonly List<ProcessReport> _processReports;
     }

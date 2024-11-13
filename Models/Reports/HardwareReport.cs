@@ -6,14 +6,25 @@ using System.Threading.Tasks;
 
 namespace resurec.Models.Reports
 {
-    public class HardwareReport
+    public class HardwareReport : IReport
     {
-        public double CpuUsage { get; set; }
-        public double CpuTemperature { get; set; }
+        public float? CpuUsage { get; set; }
+        public float? CpuTemperature { get; set; }
 
-        public double RamUsage { get; set; }
+        public float? RamUsage { get; set; }
 
-        public double GpuUsage { get; set; }
-        public double GpuTemperature { get; set; }
+        public float? GpuUsage { get; set; }
+        public float? GpuTemperature { get; set; }
+
+        public HardwareReport() { }
+
+        public HardwareReport(float cpuUsage, float cpuTemperature, float ramUsage, float gpuUsage, float gpuTemperature)
+        {
+            CpuUsage = cpuUsage;
+            CpuTemperature = cpuTemperature;
+            RamUsage = ramUsage;
+            GpuUsage = gpuUsage;
+            GpuTemperature = gpuTemperature;
+        }
     }
 }
