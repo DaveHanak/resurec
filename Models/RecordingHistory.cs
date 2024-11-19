@@ -10,27 +10,22 @@ namespace resurec.Models
     public class RecordingHistory
     {
         private readonly IRecordingProvider _recordingProvider;
+        private readonly IRecordingRemover _recordingRemover;
         
-        public RecordingHistory(IRecordingProvider recordingProvider)
+        public RecordingHistory(IRecordingProvider recordingProvider, IRecordingRemover recordingRemover)
         {
             _recordingProvider = recordingProvider;
+            _recordingRemover = recordingRemover;
         }
 
-        public async Task<IEnumerable<Recording>> GetRecordingsAsync()
+        public async Task<IEnumerable<Recording>> GetRecordings()
         {
             return await _recordingProvider.GetRecordings();
         }
 
-        public async Task AddRecording(Recording recording)
+        public async Task RemoveRecording(string recordingName)
         {
-           // await _recordingProvider.AddRecording(recording);
-           throw new NotImplementedException();
-        }
-
-        public async Task RemoveRecording(Recording recording)
-        {
-            //await _recordingProvider.RemoveRecording(recording);
-            throw new NotImplementedException();
+            await _recordingRemover.RemoveRecording(recordingName);
         }
     }
 }

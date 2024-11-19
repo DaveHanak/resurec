@@ -4,10 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-//todo
-namespace resurec.Models.Reports
+namespace resurec.DbContexts.Factories
 {
-    public class ProcessReport : IReport
+    public interface IResurecDbContextFactory
     {
+        ResurecDbContext CreateDbContext();
     }
 }

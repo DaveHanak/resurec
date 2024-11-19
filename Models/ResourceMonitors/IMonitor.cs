@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace resurec.ResourceMonitors
+namespace resurec.Models.ResourceMonitors
 {
     public interface IMonitor<TReport> where TReport : IReport
     {

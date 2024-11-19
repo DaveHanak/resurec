@@ -1,8 +1,9 @@
-﻿namespace resurec.Services.RecordingCreators
+﻿using resurec.Models;
+
+namespace resurec.Services.RecordingCreators
 {
     public interface IRecordingCreator
     {
-        Task StartRecording();
-        Task StopRecording();
+        Task CreateRecording(Recording recording);
     }
 }

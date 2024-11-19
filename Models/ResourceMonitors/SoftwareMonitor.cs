@@ -5,7 +5,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace resurec.ResourceMonitors
+//todo
+namespace resurec.Models.ResourceMonitors
 {
     public class SoftwareMonitor : IMonitor<SoftwareReport>
     {
