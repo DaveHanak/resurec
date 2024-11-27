@@ -37,7 +37,7 @@ namespace resurec.Stores
                 throw;
             }
         }
-        public async Task StartRecording()
+        public void StartRecording()
         {
             if (_recorder.IsRecording)
             {

@@ -11,7 +11,7 @@ using resurec.ViewModels;
 
 namespace resurec.Commands
 {
-    public class StartRecordingCommand : AsyncCommandBase
+    public class StartRecordingCommand : CommandBase
     {
         private readonly ResurecViewModel? _resurecViewModel;
         private readonly RecorderStore? _recorderStore;
@@ -32,9 +32,9 @@ namespace resurec.Commands
             return !_resurecViewModel?.IsRecording ?? false;
         }
 
-        public override async Task ExecuteAsync(object? parameter)
+        public override void Execute(object? parameter)
         {
-            if (_recorderStore == null)
+            if (_recorderStore == null || _resurecViewModel == null)
             {
                 return;
             }
@@ -44,7 +44,7 @@ namespace resurec.Commands
 
             try
             {
-                await _recorderStore.StartRecording();
+                _recorderStore.StartRecording();
             }
             catch (Exception e)
             {

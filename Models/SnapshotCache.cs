@@ -9,27 +9,16 @@ namespace resurec.Models
 {
     public class SnapshotCache
     {
-        private readonly List<HardwareReport> _lastMinuteHardwareReports = [];
         private readonly List<HardwareReport> _recordedHardwareReports = [];
-        public IReadOnlyList<HardwareReport> LastMinuteHardwareReports => _lastMinuteHardwareReports;
         public IReadOnlyList<HardwareReport> RecordedHardwareReports => _recordedHardwareReports;
-        public HardwareReport LatestHardwareReport { get; private set; }
+        public HardwareReport? LatestHardwareReport { get; private set; }
         public bool RecordingCaching { get; private set; }
 
-        public SnapshotCache()
-        {
-        }
+        public SnapshotCache() { }
 
         public void AddSnapshot(HardwareReport hardwareReport)
         {
             LatestHardwareReport = hardwareReport;
-
-            _lastMinuteHardwareReports.Add(hardwareReport);
-            if (_lastMinuteHardwareReports.Count > 60)
-            {
-                _lastMinuteHardwareReports.RemoveAt(0);
-            }
-
             if (RecordingCaching)
             {
                 _recordedHardwareReports.Add(hardwareReport);
@@ -46,7 +35,7 @@ namespace resurec.Models
             RecordingCaching = false;
         }
 
-        public void FlushRecorded()
+        public void Clear()
         {
             _recordedHardwareReports.Clear();
         }

@@ -10,6 +10,6 @@ namespace resurec.Models.Reports
 {
     public class SoftwareReport : IReport
     {
-        private readonly List<ProcessReport> _processReports;
+        //private readonly List<ProcessReport> _processReports;
     }
 }

@@ -37,7 +37,7 @@ namespace resurec.Commands
 
         public override async Task ExecuteAsync(object? parameter)
         {
-            if (_recorderStore == null)
+            if (_recorderStore == null || _resurecViewModel == null)
             {
                 return;
             }

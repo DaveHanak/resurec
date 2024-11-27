@@ -72,9 +72,9 @@ namespace resurec.ViewModels
             _recordings.Add(recordingViewModel);
         }
 
-        public static RecordingHistoryViewModel LoadViewModel(RecorderStore recorderStore, NavigationService<ResurecViewModel> makeReservationNavigationService)
+        public static RecordingHistoryViewModel LoadViewModel(RecorderStore recorderStore, NavigationService<ResurecViewModel> resurecNavigationService)
         {
-            RecordingHistoryViewModel viewModel = new(recorderStore, makeReservationNavigationService);
+            RecordingHistoryViewModel viewModel = new(recorderStore, resurecNavigationService);
 
             viewModel.LoadRecordingsCommand.Execute(null);
 

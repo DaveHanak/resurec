@@ -38,7 +38,7 @@ namespace resurec.Models
             _snapshotCache.AddSnapshot(_hardwareMonitor.CreateReport());
         }
 
-        public HardwareReport GetLatestSnapshot()
+        public HardwareReport? GetLatestSnapshot()
         {
             return _snapshotCache.LatestHardwareReport;
         }
@@ -70,10 +70,9 @@ namespace resurec.Models
             }
 
             var finalHardwareReport = new AveragedHardwareReport(_snapshotCache.RecordedHardwareReports);
-            _snapshotCache.FlushRecorded();
+            _snapshotCache.Clear();
 
-            //todo: add name and description
-            Recording recording = new Recording(_timeStarted, timeStopped, finalHardwareReport);
+            var recording = new Recording(_timeStarted, timeStopped, finalHardwareReport);
             await _recordingCreator.CreateRecording(recording);
             
             return recording;

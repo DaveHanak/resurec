@@ -11,7 +11,6 @@ namespace resurec.ViewModels
     public class RecordingViewModel
     {
         private readonly Recording _recording;
-
         public string Name => _recording.Name;
         public string StartTime => _recording.StartTime.ToString("u");
         public string EndTime => _recording.StartTime.ToString("u");
