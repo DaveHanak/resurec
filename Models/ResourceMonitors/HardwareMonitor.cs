@@ -1,4 +1,5 @@
-﻿using LibreHardwareMonitor.Hardware;
+﻿using HidSharp.Reports;
+using LibreHardwareMonitor.Hardware;
 using resurec.Models.Reports;
 using System;
 using System.Collections.Generic;
@@ -34,15 +35,15 @@ namespace resurec.Models.ResourceMonitors
                 switch (hardware.HardwareType)
                 {
                     case HardwareType.Cpu:
-                        report.CpuUsage = GetSensorValue(hardware, SensorType.Load, "Some Cpu Load Name");
-                        report.CpuTemperature = GetSensorValue(hardware, SensorType.Temperature, "Some Cpu Temp Name");
+                        report.CpuUsage = GetSensorValue(hardware, SensorType.Load, "CPU Total");
+                        report.CpuTemperature = GetSensorValue(hardware, SensorType.Temperature, "CPU Package"); // needs admin
                         break;
                     case HardwareType.Memory:
                         report.RamUsage = GetSensorValue(hardware, SensorType.Load);
                         break;
                     case HardwareType.GpuNvidia:
-                        report.GpuUsage = GetSensorValue(hardware, SensorType.Load, "Some Gpu Load Name");
-                        report.GpuTemperature = GetSensorValue(hardware, SensorType.Temperature, "Some Gpu Temp Name");
+                        report.GpuUsage = GetSensorValue(hardware, SensorType.Load, "GPU Core");
+                        report.GpuTemperature = GetSensorValue(hardware, SensorType.Temperature, "GPU Hot Spot");
                         break;
                 }
             }

@@ -27,11 +27,11 @@ namespace resurec.ViewModels
         private ObservableCollection<float> _gpuUsage;
         private ObservableCollection<float> _gpuTemperature;
 
-        public ObservableCollection<ISeries> CpuUsageSeries { get; set; }
-        public ObservableCollection<ISeries> CpuTemperatureSeries { get; set; }
-        public ObservableCollection<ISeries> RamUsageSeries { get; set; }
-        public ObservableCollection<ISeries> GpuUsageSeries { get; set; }
-        public ObservableCollection<ISeries> GpuTemperatureSeries { get; set; }
+        public ISeries[] CpuUsageSeries { get; set; }
+        public ISeries[] CpuTemperatureSeries { get; set; }
+        public ISeries[] RamUsageSeries { get; set; }
+        public ISeries[] GpuUsageSeries { get; set; }
+        public ISeries[] GpuTemperatureSeries { get; set; }
 
         public ICommand StartRecordingCommand { get; }
         public ICommand StopRecordingCommand { get; }
@@ -53,22 +53,11 @@ namespace resurec.ViewModels
             _gpuUsage = new ObservableCollection<float>(new float[60]);
             _gpuTemperature = new ObservableCollection<float>(new float[60]);
 
-            CpuUsageSeries = new ObservableCollection<ISeries>
-            {
-                new LineSeries<float> { Values = _cpuUsage, Name = "CPU Usage" }
-            };
-            CpuTemperatureSeries = new ObservableCollection<ISeries> {
-                new LineSeries<float> { Values = _cpuTemperature, Name = "CPU Temperature" }
-            };
-            RamUsageSeries = new ObservableCollection<ISeries> {
-                new LineSeries<float> { Values = _ramUsage, Name = "RAM usage" }
-            };
-            GpuUsageSeries = new ObservableCollection<ISeries> {
-                new LineSeries<float> { Values = _gpuUsage, Name = "GPU Usage" }
-            };
-            GpuTemperatureSeries = new ObservableCollection<ISeries> {
-                new LineSeries<float> { Values = _gpuTemperature, Name = "GPU Temperature" }
-            };
+            CpuUsageSeries = [ new LineSeries<float> { Values = _cpuUsage, Name = "CPU Usage" }, new LineSeries<float> { Values = _gpuUsage, Name = "GPU Usage" }];
+            CpuTemperatureSeries = [ new LineSeries<float> { Values = _cpuTemperature, Name = "CPU Temperature" }];
+            RamUsageSeries = [ new LineSeries<float> { Values = _ramUsage, Name = "RAM usage" }];
+            GpuUsageSeries = [ new LineSeries<float> { Values = _gpuUsage, Name = "GPU Usage" }];
+            GpuTemperatureSeries = [ new LineSeries<float> { Values = _gpuTemperature, Name = "GPU Temperature" }];
         }
         public bool IsRecording => _recorder?.IsRecording ?? false;
 
@@ -97,14 +86,13 @@ namespace resurec.ViewModels
             }
         }
 
-        private void UpdateCollection(ObservableCollection<float> collection, float value)
+        private void UpdateCollection(ObservableCollection<float> collection, float? value)
         {
-            collection.Add(value);
+            collection.Add(value ?? 0.0f);
             if (collection.Count > 60)
             {
                 collection.RemoveAt(0);
             }
-            OnPropertyChanged(nameof(collection));
         }
 
         private void UpdateStatistics(object? sender, EventArgs e)
@@ -119,11 +107,11 @@ namespace resurec.ViewModels
                 return;
             }
 
-            UpdateCollection(_cpuUsage, snapshot.CpuUsage ?? 0.0f);
-            UpdateCollection(_cpuTemperature, snapshot.CpuTemperature ?? 0.0f);
-            UpdateCollection(_ramUsage, snapshot.RamUsage ?? 0.0f);
-            UpdateCollection(_gpuUsage, snapshot.GpuUsage ?? 0.0f);
-            UpdateCollection(_gpuTemperature, snapshot.GpuTemperature ?? 0.0f);
+            UpdateCollection(_cpuUsage, snapshot.CpuUsage);
+            UpdateCollection(_cpuTemperature, snapshot.CpuTemperature);
+            UpdateCollection(_ramUsage, snapshot.RamUsage);
+            UpdateCollection(_gpuUsage, snapshot.GpuUsage);
+            UpdateCollection(_gpuTemperature, snapshot.GpuTemperature);
         }
 
         public override void Dispose()

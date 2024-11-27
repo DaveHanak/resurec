@@ -4,9 +4,20 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:resurec"
+        xmlns:views="clr-namespace:resurec.Views"
+        xmlns:vms="clr-namespace:resurec.ViewModels"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
+        <Grid.Resources>
+                <DataTemplate DataType="{x:Type vms:ResurecViewModel}">
+                    <views:ResurecView />
+                </DataTemplate>
+                <DataTemplate DataType="{x:Type vms:RecordingHistoryViewModel}">
+                    <views:RecordingHistoryView />
+                </DataTemplate>
+            </Grid.Resources>
 
+            <ContentControl Content="{Binding CurrentViewModel}" />
     </Grid>
 </Window>

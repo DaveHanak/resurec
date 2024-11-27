@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -9,6 +10,8 @@ namespace resurec.DTOs
 {
     public class HardwareReportDTO
     {
+        [Key]
+        public Guid Id { get; set; }
         public float? CpuUsage { get; set; }
         public float? CpuTemperature { get; set; }
         public float? RamUsage { get; set; }

@@ -8,12 +8,12 @@ using System.Windows.Threading;
 namespace resurec.Models
 {
     /// <summary>
-    /// A global timer that can be used to trigger events at a regular interval.
+    /// A global timer that can be used to trigger events at a regular 1 second interval.
     /// It is essentially a wrapper around a DispatcherTimer.
     /// </summary>
     public class GlobalTimer
     {
-        private readonly DispatcherTimer _timer = new();
+        private readonly DispatcherTimer _timer = new() { Interval = TimeSpan.FromSeconds(1) };
         public GlobalTimer() { }
         public bool IsStarted => _timer.IsEnabled;
         public void Start()

@@ -4,6 +4,7 @@ using System.Windows;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using OpenTK.Graphics.OpenGL;
 using resurec.DbContexts;
 using resurec.DbContexts.Factories;
 using resurec.HostBuilders;
@@ -52,11 +53,17 @@ namespace resurec
             MainWindow = _host.Services.GetRequiredService<MainWindow>();
             MainWindow.Show();
 
+            GlobalTimer globalTimer = _host.Services.GetRequiredService<GlobalTimer>();
+            globalTimer.Start();
+
             base.OnStartup(e);
         }
 
         protected override void OnExit(ExitEventArgs e)
         {
+            GlobalTimer globalTimer = _host.Services.GetRequiredService<GlobalTimer>();
+            globalTimer.Stop();
+
             _host.Dispose();
             base.OnExit(e);
         }
