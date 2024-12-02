@@ -6,22 +6,44 @@
              xmlns:local="clr-namespace:resurec.Views"
              xmlns:lvc="clr-namespace:LiveChartsCore.SkiaSharpView.WPF;assembly=LiveChartsCore.SkiaSharpView.WPF"
              mc:Ignorable="d" 
-             d:DesignHeight="650" d:DesignWidth="800">
+             d:DesignHeight="900" d:DesignWidth="1600">
+    <UserControl.Resources>
+        <Style TargetType="lvc:CartesianChart">
+            <Setter Property="Height" Value="80"/>
+            <Setter Property="Width" Value="700"/>
+        </Style>
+        <Style TargetType="lvc:PieChart">
+            <Setter Property="Height" Value="150"/>
+            <Setter Property="Width" Value="700"/>
+            <Setter Property="InitialRotation" Value="-225"/>
+            <Setter Property="MaxAngle" Value="270"/>
+            <Setter Property="MinValue" Value="0"/>
+            <Setter Property="MaxValue" Value="100"/>
+        </Style>
+    </UserControl.Resources>
     <Grid>
         <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
             <TextBlock Text="Resource Usage" FontSize="20" FontWeight="Bold" HorizontalAlignment="Center" Margin="0,10,0,10"/>
 
             <!-- CPU Usage Chart -->
             <TextBlock Text="CPU Usage:" Margin="0,10,0,0"/>
-            <lvc:CartesianChart Series="{Binding CpuUsageSeries}" Height="150" Width="700"/>
+            <lvc:CartesianChart Series="{Binding CpuChart.Series}" />
 
             <!-- RAM Usage Chart -->
             <TextBlock Text="RAM Usage:" Margin="0,10,0,0"/>
-            <lvc:CartesianChart Series="{Binding RamUsageSeries}" Height="150" Width="700"/>
+            <lvc:CartesianChart Series="{Binding RamChart.Series}" />
 
             <!-- GPU Usage Chart -->
             <TextBlock Text="GPU Usage:" Margin="0,10,0,0"/>
-            <lvc:CartesianChart Series="{Binding GpuUsageSeries}" Height="150" Width="700"/>
+            <lvc:CartesianChart Series="{Binding GpuChart.Series}" />
+            
+            <!-- CPU Temperature Gauge -->
+            <TextBlock Text="CPU Temperature:" Margin="0,10,0,0"/>
+            <lvc:PieChart Series="{Binding CpuTemperatureGauge.Series}" VisualElements="{Binding CpuTemperatureGauge.VisualElements}" />
+
+            <!-- GPU Temperature Gauge -->
+            <TextBlock Text="CPU Temperature:" Margin="0,10,0,0"/>
+            <lvc:PieChart Series="{Binding GpuTemperatureGauge.Series}" VisualElements="{Binding GpuTemperatureGauge.VisualElements}" />
         </StackPanel>
     </Grid>
 </UserControl>
