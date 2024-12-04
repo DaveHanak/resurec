@@ -8,7 +8,6 @@ using resurec.Models;
 
 namespace resurec.DTOs
 {
-
     public class RecordingDTO
     {
         [Key]

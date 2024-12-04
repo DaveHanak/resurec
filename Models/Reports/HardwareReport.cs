@@ -8,13 +8,13 @@ namespace resurec.Models.Reports
 {
     public class HardwareReport : IReport
     {
-        public float? CpuUsage { get; set; }
-        public float? CpuTemperature { get; set; }
+        public float CpuUsage { get; set; }
+        public float CpuTemperature { get; set; }
 
-        public float? RamUsage { get; set; }
+        public float RamUsage { get; set; }
 
-        public float? GpuUsage { get; set; }
-        public float? GpuTemperature { get; set; }
+        public float GpuUsage { get; set; }
+        public float GpuTemperature { get; set; }
 
         public HardwareReport() { }
 

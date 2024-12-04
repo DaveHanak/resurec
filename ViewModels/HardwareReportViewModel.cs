@@ -10,15 +10,15 @@ namespace resurec.ViewModels
 {
     public class HardwareReportViewModel : ViewModelBase, IDisposable
     {
-        private HardwareReport? _hardwareReport;
+        private readonly HardwareReport _hardwareReport;
 
-        public string CpuUsage => _hardwareReport?.CpuUsage.HasValue == true ? $"{_hardwareReport.CpuUsage.Value:F1} %" : "N/A";
-        public string CpuTemperature => _hardwareReport?.CpuTemperature.HasValue == true ? $"{_hardwareReport.CpuTemperature.Value:F1} °C" : "N/A";
+        public string CpuUsage => $"{_hardwareReport.CpuUsage:F1}%";
+        public string CpuTemperature => $"{_hardwareReport.CpuTemperature:F1}°C";
 
-        public string RamUsage => _hardwareReport?.RamUsage.HasValue == true ? $"{_hardwareReport.RamUsage.Value:F1} %" : "N/A";
+        public string RamUsage => $"{_hardwareReport.RamUsage:F1}%";
 
-        public string GpuUsage => _hardwareReport?.GpuUsage.HasValue == true ? $"{_hardwareReport.GpuUsage.Value:F1} %" : "N/A";
-        public string GpuTemperature => _hardwareReport?.GpuTemperature.HasValue == true ? $"{_hardwareReport.GpuTemperature.Value:F1} °C" : "N/A";
+        public string GpuUsage => $"{_hardwareReport.GpuUsage:F1}%";
+        public string GpuTemperature => $"{_hardwareReport.GpuTemperature:F1}°C";
 
         public HardwareReportViewModel(HardwareReport hardwareReport)
         {

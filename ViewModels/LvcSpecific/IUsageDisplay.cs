@@ -9,6 +9,7 @@ namespace resurec.ViewModels.CustomLvc
 {
     public interface IUsageDisplay
     {
-        public void Update(HardwareReport report);
+        public void Update(float value);
+        public void RescaleLabels(double actualWidth, double actualHeight);
     }
 }

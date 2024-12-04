@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using LiveChartsCore;
+using LiveChartsCore.Measure;
 using LiveChartsCore.SkiaSharpView;
 using LiveChartsCore.SkiaSharpView.Painting;
 using Microsoft.EntityFrameworkCore.ChangeTracking.Internal;
@@ -25,16 +26,20 @@ namespace resurec.ViewModels
         private readonly Recorder _recorder;
         private readonly GlobalTimer _globalTimer;
 
-        private readonly ObservableCollection<float> _cpuUsage;
-        private readonly ObservableCollection<float> _ramUsage;
-        private readonly ObservableCollection<float> _gpuUsage;
+        //todo move to some global color palette
+        private static readonly SKColor red = new(200, 0, 0);
+        private static readonly SKColor red_transparent = new(200, 0, 0, 150);
+        private static readonly SKColor green = new(0, 200, 0);
+        private static readonly SKColor green_transparent = new(0, 200, 0, 150);
+        private static readonly SKColor blue = new(0, 0, 200);
+        private static readonly SKColor blue_transparent = new(0, 0, 200, 150);
 
-        public CpuUsageChart CpuChart { get; set; }
-        public RamUsageChart RamChart { get; set; }
-        public GpuUsageChart GpuChart { get; set; }
 
-        public NeedleGauge CpuTemperatureGauge { get; set; }
-        public NeedleGauge GpuTemperatureGauge { get; set; }
+        public UsageChart CpuUsage { get; set; } = new("CPU", AxisPosition.Start, red, red_transparent);
+        public UsageChart GpuUsage { get; set; } = new("GPU", AxisPosition.End, green, green_transparent);
+        public UsageGauge RamUsage { get; set; } = new("%", 30, blue);
+        public UsageGauge CpuTemperature { get; set; } = new("°C", 60, red);
+        public UsageGauge GpuTemperature { get; set; } = new("°C", 60, green);
 
         public ICommand StartRecordingCommand { get; }
         public ICommand StopRecordingCommand { get; }
@@ -50,13 +55,6 @@ namespace resurec.ViewModels
             NavigateCommand = new NavigateCommand<RecordingHistoryViewModel>(recordingHistoryNavigationService);
 
             _globalTimer.AddCallback(UpdateStatistics);
-
-            CpuChart = new CpuUsageChart(_cpuUsage, _gpuUsage);
-            RamChart = new RamUsageChart(_ramUsage);
-            GpuChart = new GpuUsageChart(_gpuUsage);
-
-            CpuTemperatureGauge = new NeedleGauge();
-            GpuTemperatureGauge = new NeedleGauge();
         }
         public bool IsRecording => _recorder?.IsRecording ?? false;
 
@@ -97,13 +95,11 @@ namespace resurec.ViewModels
                 return;
             }
 
-            UpdateCollection(_cpuUsage, snapshot.CpuUsage);
-            UpdateCollection(_ramUsage, snapshot.RamUsage);
-            UpdateCollection(_gpuUsage, snapshot.GpuUsage);
-
-            CpuChart.UpdateChart();
-            CpuTemperatureGauge.UpdateNeedle(snapshot.CpuTemperature);
-            GpuTemperatureGauge.UpdateNeedle(snapshot.GpuTemperature);
+            CpuUsage.Update(snapshot.CpuUsage);
+            RamUsage.Update(snapshot.RamUsage);
+            GpuUsage.Update(snapshot.GpuUsage);
+            CpuTemperature.Update(snapshot.CpuTemperature);
+            GpuTemperature.Update(snapshot.GpuTemperature);
         }
 
         public override void Dispose()

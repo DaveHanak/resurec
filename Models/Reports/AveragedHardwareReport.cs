@@ -17,7 +17,7 @@ namespace resurec.Models.Reports
             GpuTemperature = hardwareReports.Average(report => report.GpuTemperature);
         }
 
-        public AveragedHardwareReport(float? cpuUsage, float? cpuTemperature, float? ramUsage, float? gpuUsage, float? gpuTemperature)
+        public AveragedHardwareReport(float cpuUsage, float cpuTemperature, float ramUsage, float gpuUsage, float gpuTemperature)
         {
             CpuUsage = cpuUsage;
             CpuTemperature = cpuTemperature;

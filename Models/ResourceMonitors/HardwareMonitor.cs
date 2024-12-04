@@ -50,10 +50,10 @@ namespace resurec.Models.ResourceMonitors
             return report;
         }
 
-        private float? GetSensorValue(IHardware hardware, SensorType sensorType, string? sensorName = null)
+        private float GetSensorValue(IHardware hardware, SensorType sensorType, string? sensorName = null)
         {
             var sensor = hardware.Sensors.FirstOrDefault(s => s.SensorType == sensorType && (sensorName == null || s.Name == sensorName));
-            return sensor?.Value;
+            return sensor?.Value ?? 0.0f;
         }
 
         public void Dispose()

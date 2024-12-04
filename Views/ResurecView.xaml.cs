@@ -12,6 +12,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using resurec.ViewModels;
+using resurec.ViewModels.CustomLvc;
 
 namespace resurec.Views
 {
@@ -23,6 +25,16 @@ namespace resurec.Views
         public ResurecView()
         {
             InitializeComponent();
+            SizeChanged += OnSizeChanged;
+        }
+        private void OnSizeChanged(object sender, SizeChangedEventArgs e)
+        {
+            if (DataContext is ResurecViewModel viewModel)
+            {
+                viewModel.RamUsage.RescaleLabels(ActualWidth, ActualHeight);
+                viewModel.CpuTemperature.RescaleLabels(ActualWidth, ActualHeight);
+                viewModel.GpuTemperature.RescaleLabels(ActualWidth, ActualHeight);
+            }
         }
     }
 }
