@@ -9,6 +9,7 @@ namespace resurec.ViewModels.LvcSpecific
 {
     public class ColorPalette
     {
+        //TODO register this as a service or something
         public SKColor white = new(250, 250, 250);
         public SKColor gray_lightest = new(225, 225, 225);
         public SKColor gray_lighter = new(200, 200, 200);

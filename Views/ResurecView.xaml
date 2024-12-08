@@ -35,9 +35,9 @@
             <ColumnDefinition Width="*" />
             <ColumnDefinition Width="*" />
             <ColumnDefinition Width="*" />
-            
+
             <ColumnDefinition Width="*" />
-            
+
             <ColumnDefinition Width="*" />
             <ColumnDefinition Width="*" />
             <ColumnDefinition Width="*" />
@@ -70,29 +70,141 @@
             Grid.Row="2"
             Grid.RowSpan="2"
             Grid.Column="0"
-            Grid.ColumnSpan="3"
+            Grid.ColumnSpan="2"
             Series="{Binding CpuTemperature.Series}"
         />
 
-        <TextBlock
-            Grid.Row="0"
-            Grid.Column="3"
-            Text="RAM"
-            HorizontalAlignment="Center"
-            VerticalAlignment="Top"
-            FontSize="40"
-            Foreground="White"/>
-        <lvc:PieChart
+        <Grid
             Grid.Row="0"
             Grid.RowSpan="2"
-            Grid.Column="3"
-            Series="{Binding RamUsage.Series}"
-        />
+            Grid.Column="3">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <TextBlock
+                Grid.Row="0"
+                Text="RAM"
+                HorizontalAlignment="Center"
+                FontSize="40"
+                Foreground="White"
+            />
+            <lvc:PieChart
+                Grid.Row="1"
+                Series="{Binding RamUsage.Series}"
+            />
+        </Grid>
+        
+        <Grid
+            Grid.Row="2"
+            Grid.Column="2"
+            Grid.RowSpan="2"
+            Grid.ColumnSpan="3">
+
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+
+            <Button
+                Grid.Row="1"
+                Grid.Column="2"
+                Grid.RowSpan="3"
+                Grid.ColumnSpan="5"
+                FontSize="30">
+                <Button.Style>
+                    <Style BasedOn="{StaticResource {x:Type Button}}" TargetType="Button">
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding IsRecording}" Value="False">
+                                <Setter Property="Content" Value="Start Recording"/>
+                                <Setter Property="Background" Value="#E1E1E1"/>
+                                <Setter Property="Command" Value="{Binding StartRecordingCommand}"/>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding IsRecording}" Value="True">
+                                <Setter Property="Content" Value="Finish Recording"/>
+                                <Setter Property="Background" Value="#E10000"/>
+                                <Setter Property="Command" Value="{Binding StopRecordingCommand}"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Button.Style>
+            </Button>
+
+            <Button
+                Grid.Row="5"
+                Grid.Column="1"
+                Grid.ColumnSpan="3"
+                FontSize="20"
+                Content="View Recordings"
+                Command="{Binding NavigateCommand}">
+            </Button>
+
+            <Button
+                Grid.Row="5"
+                Grid.Column="5"
+                Grid.ColumnSpan="3"
+                FontSize="20"
+                Content="Cancel Recording"
+                Command="{Binding CancelRecordingCommand}">
+            </Button>
+
+            <Button
+                Grid.Row="7"
+                Grid.Column="1"
+                Grid.ColumnSpan="3"
+                FontSize="20">
+                <Button.Style>
+                    <Style BasedOn="{StaticResource {x:Type Button}}" TargetType="Button">
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding IsMonitoring}" Value="False">
+                                <Setter Property="Content" Value="Resume Monitor"/>
+                                <Setter Property="Background" Value="#00E100"/>
+                                <Setter Property="Command" Value="{Binding StartMonitoringCommand}"/>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding IsMonitoring}" Value="True">
+                                <Setter Property="Content" Value="Pause Monitor"/>
+                                <Setter Property="Background" Value="#E1E1E1"/>
+                                <Setter Property="Command" Value="{Binding StopMonitoringCommand}"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Button.Style>
+            </Button>
+
+            <Button
+                Grid.Row="7"
+                Grid.Column="5"
+                Grid.ColumnSpan="3"
+                FontSize="20"
+                Content="Clear Monitor"
+                Command="{Binding ClearMonitorCommand}">
+            </Button>
+        </Grid>
+
         <lvc:PieChart
             Grid.Row="2"
             Grid.RowSpan="2"
-            Grid.Column="4"
-            Grid.ColumnSpan="3"
+            Grid.Column="5"
+            Grid.ColumnSpan="2"
             Series="{Binding GpuTemperature.Series}"
         />
     </Grid>

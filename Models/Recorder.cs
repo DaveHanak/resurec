@@ -53,6 +53,16 @@ namespace resurec.Models
             _timeStarted = DateTime.Now;
         }
 
+        public void CancelRecording()
+        {
+            if (!IsRecording)
+            {
+                throw new NotRecordingException();
+            }
+            _snapshotCache.StopRecording();
+            _snapshotCache.Clear();
+        }
+
         public async Task<Recording> StopRecording()
         {
             if (!IsRecording)

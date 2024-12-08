@@ -48,6 +48,7 @@ namespace resurec.Commands
             try
             {
                 await _recorderStore.StopRecording();
+                _resurecViewModel.IsRecording = false;
                 _recordingHistoryNavigationService.Navigate();
             }
             catch (Exception e)

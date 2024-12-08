@@ -17,5 +17,13 @@ namespace resurec.ViewModels.CustomLvc.LvcExtensions
                 collection.RemoveAt(0);
             }
         }
+
+        public static void Clear60s(this ObservableCollection<float> collection)
+        {
+            for (int i = 0; i < collection.Count; i++)
+            {
+                collection[i] = 0;
+            }
+        }
     }
 }

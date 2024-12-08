@@ -62,6 +62,11 @@ namespace resurec.ViewModels.CustomLvc
             GaugeValue.Value = (int)value;
         }
 
+        public void Clear()
+        {
+            GaugeValue.Value = 0;
+        }
+
         public void RescaleLabels(double actualWidth, double actualHeight)
         {
             var s = (PieSeries<ObservableValue>)Series.First();

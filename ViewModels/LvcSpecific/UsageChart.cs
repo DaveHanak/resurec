@@ -128,6 +128,11 @@ namespace resurec.ViewModels.CustomLvc
             _usageReads.Update60s(value);
         }
 
+        public void Clear()
+        {
+            _usageReads.Clear60s();
+        }
+
         public void RescaleLabels(double actualWidth, double actualHeight)
         {
             var x = XAxes[0];

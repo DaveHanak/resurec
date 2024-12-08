@@ -1,25 +1,21 @@
-﻿using System;
+﻿using resurec.Stores;
+using resurec.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using resurec.Exceptions;
-using resurec.Services;
-using resurec.Stores;
-using resurec.ViewModels;
 
 namespace resurec.Commands
 {
-    public class StartRecordingCommand : CommandBase
+    public class ClearMonitorCommand : CommandBase
     {
         private readonly ResurecViewModel? _resurecViewModel;
-        private readonly RecorderStore? _recorderStore;
 
-        public StartRecordingCommand(ResurecViewModel? resurecViewModel, RecorderStore? recorderStore)
+        public ClearMonitorCommand(ResurecViewModel? resurecViewModel)
         {
             _resurecViewModel = resurecViewModel;
-            _recorderStore = recorderStore;
 
             if (_resurecViewModel != null)
             {
@@ -29,12 +25,12 @@ namespace resurec.Commands
 
         public override bool CanExecute(object? parameter)
         {
-            return !_resurecViewModel?.IsRecording ?? false;
+            return true;
         }
 
         public override void Execute(object? parameter)
         {
-            if (_recorderStore == null || _resurecViewModel == null)
+            if (_resurecViewModel == null)
             {
                 return;
             }
@@ -44,8 +40,7 @@ namespace resurec.Commands
 
             try
             {
-                _recorderStore.StartRecording();
-                _resurecViewModel.IsRecording = true;
+                _resurecViewModel.ClearMonitor();
             }
             catch (Exception e)
             {

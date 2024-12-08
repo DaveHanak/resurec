@@ -1,25 +1,24 @@
-﻿using System;
+﻿using resurec.Models;
+using resurec.Stores;
+using resurec.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using resurec.Exceptions;
-using resurec.Services;
-using resurec.Stores;
-using resurec.ViewModels;
 
 namespace resurec.Commands
 {
-    public class StartRecordingCommand : CommandBase
+    public class StartMonitoringCommand : CommandBase
     {
         private readonly ResurecViewModel? _resurecViewModel;
-        private readonly RecorderStore? _recorderStore;
+        private readonly GlobalTimer? _globalTimer;
 
-        public StartRecordingCommand(ResurecViewModel? resurecViewModel, RecorderStore? recorderStore)
+        public StartMonitoringCommand(ResurecViewModel? resurecViewModel, GlobalTimer? globalTimer)
         {
             _resurecViewModel = resurecViewModel;
-            _recorderStore = recorderStore;
+            _globalTimer = globalTimer;
 
             if (_resurecViewModel != null)
             {
@@ -29,12 +28,12 @@ namespace resurec.Commands
 
         public override bool CanExecute(object? parameter)
         {
-            return !_resurecViewModel?.IsRecording ?? false;
+            return !_resurecViewModel?.IsMonitoring ?? false;
         }
 
         public override void Execute(object? parameter)
         {
-            if (_recorderStore == null || _resurecViewModel == null)
+            if (_globalTimer == null || _resurecViewModel == null)
             {
                 return;
             }
@@ -44,8 +43,8 @@ namespace resurec.Commands
 
             try
             {
-                _recorderStore.StartRecording();
-                _resurecViewModel.IsRecording = true;
+                _globalTimer.Start();
+                _resurecViewModel.IsMonitoring = true;
             }
             catch (Exception e)
             {

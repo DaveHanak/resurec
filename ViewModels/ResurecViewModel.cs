@@ -43,6 +43,10 @@ namespace resurec.ViewModels
 
         public ICommand StartRecordingCommand { get; }
         public ICommand StopRecordingCommand { get; }
+        public ICommand CancelRecordingCommand { get; }
+        public ICommand StartMonitoringCommand { get; }
+        public ICommand StopMonitoringCommand { get; }
+        public ICommand ClearMonitorCommand { get; }
         public ICommand NavigateCommand { get; }
 
         public ResurecViewModel(Recorder recorder, RecorderStore recorderStore, NavigationService<RecordingHistoryViewModel> recordingHistoryNavigationService, GlobalTimer globalTimer)
@@ -52,11 +56,39 @@ namespace resurec.ViewModels
 
             StartRecordingCommand = new StartRecordingCommand(this, recorderStore);
             StopRecordingCommand = new StopRecordingCommand(this, recorderStore, recordingHistoryNavigationService);
+            CancelRecordingCommand = new CancelRecordingCommand(this, recorderStore);
+            StartMonitoringCommand = new StartMonitoringCommand(this, globalTimer);
+            StopMonitoringCommand = new StopMonitoringCommand(this, globalTimer);
+            ClearMonitorCommand = new ClearMonitorCommand(this);
             NavigateCommand = new NavigateCommand<RecordingHistoryViewModel>(recordingHistoryNavigationService);
 
             _globalTimer.AddCallback(UpdateStatistics);
+
+            IsMonitoring = true;
+            IsRecording = false;
         }
-        public bool IsRecording => _recorder?.IsRecording ?? false;
+
+        private bool _isMonitoring;
+        public bool IsMonitoring
+        {
+            get => _isMonitoring;
+            set
+            {
+                _isMonitoring = value;
+                OnPropertyChanged(nameof(IsMonitoring));
+            }
+        }
+
+        private bool _isRecording;
+        public bool IsRecording
+        {
+            get => _isRecording;
+            set
+            {
+                _isRecording = value;
+                OnPropertyChanged(nameof(IsRecording));
+            }
+        }
 
         private string? _submitErrorMessage;
         public string SubmitErrorMessage
@@ -100,6 +132,17 @@ namespace resurec.ViewModels
             GpuUsage.Update(snapshot.GpuUsage);
             CpuTemperature.Update(snapshot.CpuTemperature);
             GpuTemperature.Update(snapshot.GpuTemperature);
+        }
+
+        public void ClearMonitor()
+        {
+            _globalTimer.RemoveCallback(UpdateStatistics);
+            CpuUsage.Clear();
+            RamUsage.Clear();
+            GpuUsage.Clear();
+            CpuTemperature.Clear();
+            GpuTemperature.Clear();
+            _globalTimer.AddCallback(UpdateStatistics);
         }
 
         public override void Dispose()

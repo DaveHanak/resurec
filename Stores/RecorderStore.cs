@@ -46,6 +46,15 @@ namespace resurec.Stores
 
             _recorder.StartRecording();
         }
+        public void CancelRecording()
+        {
+            if (!_recorder.IsRecording)
+            {
+                throw new NotRecordingException();
+            }
+
+            _recorder.CancelRecording();
+        }
         public async Task StopRecording()
         {
             if (!_recorder.IsRecording)
