@@ -1,4 +1,5 @@
-﻿using System;
+﻿using resurec.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -23,6 +24,17 @@ namespace resurec.Views
         public RecordingHistoryView()
         {
             InitializeComponent();
+        }
+
+        private void ListViewItem_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            if (sender is ListViewItem listViewItem && listViewItem.DataContext is RecordingViewModel recording)
+            {
+                if (recording.StartEditingCommand.CanExecute(null))
+                {
+                    recording.StartEditingCommand.Execute(null);
+                }
+            }
         }
     }
 }

@@ -32,7 +32,7 @@ namespace resurec.Commands
             }
             catch (Exception)
             {
-                _viewModel.ErrorMessage = "Failed to load reservations.";
+                _viewModel.ErrorMessage = "Failed to load recordings.";
             }
 
             _viewModel.IsLoading = false;

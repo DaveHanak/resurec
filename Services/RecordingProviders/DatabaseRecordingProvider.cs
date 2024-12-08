@@ -31,14 +31,21 @@ namespace resurec.Services.RecordingProviders
             }
         }
 
-        private static AveragedHardwareReport ToAveragedHardwareReport(HardwareReportDTO dto)
-        {
-            return new AveragedHardwareReport(dto.CpuUsage, dto.CpuTemperature, dto.RamUsage, dto.GpuUsage, dto.GpuTemperature);
-        }
 
         private static Recording ToRecording(RecordingDTO dto)
         {
-            return new Recording(dto.StartTime, dto.EndTime, ToAveragedHardwareReport(dto.HardwareReport));
+            return new Recording(
+                dto.Equals(Guid.Empty) ? Guid.NewGuid() : dto.Id,
+                dto.StartTime,
+                dto.EndTime,
+                new AveragedHardwareReport(
+                    dto.CpuUsage,
+                    dto.CpuTemperature,
+                    dto.RamUsage,
+                    dto.GpuUsage,
+                    dto.GpuTemperature
+                )
+            );
         }
     }
 }

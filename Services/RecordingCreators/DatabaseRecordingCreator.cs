@@ -34,25 +34,20 @@ namespace resurec.Services.RecordingCreators
             }
         }
 
-        private static HardwareReportDTO ToHardwareReportDTO(AveragedHardwareReport averagedHardwareReport)
-        {
-            return new HardwareReportDTO()
-            {
-                CpuUsage = averagedHardwareReport.CpuUsage,
-                CpuTemperature = averagedHardwareReport.CpuTemperature,
-                RamUsage = averagedHardwareReport.RamUsage,
-                GpuUsage = averagedHardwareReport.GpuUsage,
-                GpuTemperature = averagedHardwareReport.GpuTemperature
-            };
-        }
-
         private static RecordingDTO ToRecordingDTO(Recording recording)
         {
             return new RecordingDTO()
             {
+                Id = recording.Id,
+                Name = recording.Name,
                 StartTime = recording.StartTime,
                 EndTime = recording.EndTime,
-                HardwareReport = ToHardwareReportDTO(recording.AveragedHardwareReport)
+
+                CpuUsage = recording.AveragedHardwareReport.CpuUsage,
+                CpuTemperature = recording.AveragedHardwareReport.CpuTemperature,
+                RamUsage = recording.AveragedHardwareReport.RamUsage,
+                GpuUsage = recording.AveragedHardwareReport.GpuUsage,
+                GpuTemperature = recording.AveragedHardwareReport.GpuTemperature
             };
         }
     }

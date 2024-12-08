@@ -12,20 +12,15 @@ namespace resurec.DTOs
     {
         [Key]
         public Guid Id { get; set; }
-        public string Name { get; set; } = string.Empty;
+        public required string Name { get; set; }
         public DateTime StartTime { get; set; }
         public DateTime EndTime { get; set; }
         public TimeSpan Duration { get; set; }
-        public HardwareReportDTO HardwareReport { get; set; } = new HardwareReportDTO();
 
-        public RecordingDTO() { }
-        public RecordingDTO(Recording recording)
-        {
-            Name = recording.Name;
-            StartTime = recording.StartTime;
-            EndTime = recording.EndTime;
-            Duration = recording.Duration;
-            HardwareReport = new HardwareReportDTO(recording.AveragedHardwareReport);
-        }
+        public float CpuUsage { get; set; }
+        public float CpuTemperature { get; set; }
+        public float RamUsage { get; set; }
+        public float GpuUsage { get; set; }
+        public float GpuTemperature { get; set; }
     }
 }

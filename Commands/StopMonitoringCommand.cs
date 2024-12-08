@@ -55,7 +55,7 @@ namespace resurec.Commands
 
         private void OnViewModelPropertyChanged(object? sender, PropertyChangedEventArgs e)
         {
-            if (e.PropertyName == nameof(ResurecViewModel.IsRecording))
+            if (e.PropertyName == nameof(ResurecViewModel.IsMonitoring))
             {
                 OnCanExecutedChanged();
             }

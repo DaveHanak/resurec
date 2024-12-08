@@ -16,16 +16,6 @@ namespace resurec.Commands
         public ClearMonitorCommand(ResurecViewModel? resurecViewModel)
         {
             _resurecViewModel = resurecViewModel;
-
-            if (_resurecViewModel != null)
-            {
-                _resurecViewModel.PropertyChanged += OnViewModelPropertyChanged;
-            }
-        }
-
-        public override bool CanExecute(object? parameter)
-        {
-            return true;
         }
 
         public override void Execute(object? parameter)
@@ -48,14 +38,6 @@ namespace resurec.Commands
             }
 
             _resurecViewModel.IsSubmitting = false;
-        }
-
-        private void OnViewModelPropertyChanged(object? sender, PropertyChangedEventArgs e)
-        {
-            if (e.PropertyName == nameof(ResurecViewModel.IsRecording))
-            {
-                OnCanExecutedChanged();
-            }
         }
     }
 }
