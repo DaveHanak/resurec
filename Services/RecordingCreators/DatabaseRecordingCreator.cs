@@ -42,6 +42,7 @@ namespace resurec.Services.RecordingCreators
                 Name = recording.Name,
                 StartTime = recording.StartTime,
                 EndTime = recording.EndTime,
+                Duration = recording.Duration,
 
                 CpuUsage = recording.AveragedHardwareReport.CpuUsage,
                 CpuTemperature = recording.AveragedHardwareReport.CpuTemperature,

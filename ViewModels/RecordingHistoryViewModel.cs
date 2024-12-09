@@ -68,7 +68,7 @@ namespace resurec.ViewModels
 
         private void OnRecordingMade(Recording recording)
         {
-            RecordingViewModel recordingViewModel = new(recording);
+            RecordingViewModel recordingViewModel = new(recording, _recorderStore);
             _recordings.Add(recordingViewModel);
         }
 
@@ -87,7 +87,7 @@ namespace resurec.ViewModels
 
             foreach (Recording recording in recordings)
             {
-                RecordingViewModel recordingViewModel = new(recording);
+                RecordingViewModel recordingViewModel = new(recording, _recorderStore);
                 _recordings.Add(recordingViewModel);
             }
         }

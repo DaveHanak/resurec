@@ -82,15 +82,21 @@ namespace resurec.Models
             var finalHardwareReport = new AveragedHardwareReport(_snapshotCache.RecordedHardwareReports);
             _snapshotCache.Clear();
 
-            var recording = new Recording(_timeStarted, timeStopped, finalHardwareReport);
+            var recording = new Recording(
+                Guid.NewGuid(),
+                _timeStarted.ToString("yyyy-MM-dd HH:mm:ss"),
+                _timeStarted,
+                timeStopped,
+                timeStopped.Subtract(_timeStarted),
+                finalHardwareReport);
             await _recordingCreator.CreateRecording(recording);
             
             return recording;
         }
         
-        public async Task RemoveRecording(string recordingName)
+        public async Task RemoveRecording(Guid id)
         {
-            await _recordingHistory.RemoveRecording(recordingName);
+            await _recordingHistory.RemoveRecording(id);
         }
 
         public void Dispose()

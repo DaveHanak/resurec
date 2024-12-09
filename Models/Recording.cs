@@ -4,17 +4,26 @@ namespace resurec.Models
 {
     public class Recording
     {
-        public Guid Id { get; } = Guid.NewGuid();
-        public string Name => StartTime.ToString("yyyy-MM-dd HH:mm:ss");
+        public Guid Id { get; }
+        public string Name { get; }
         public DateTime StartTime { get; }
         public DateTime EndTime { get; }
-        public TimeSpan Duration => EndTime.Subtract(StartTime);
+        public TimeSpan Duration { get; }
         public AveragedHardwareReport AveragedHardwareReport { get; }
 
-        public Recording(DateTime startTime, DateTime endTime, AveragedHardwareReport averagedHardwareReport)
+        public Recording(
+            Guid id,
+            string name,
+            DateTime startTime,
+            DateTime endTime,
+            TimeSpan duration,
+            AveragedHardwareReport averagedHardwareReport)
         {
+            Id = id;
+            Name = name;
             StartTime = startTime;
             EndTime = endTime;
+            Duration = duration;
             AveragedHardwareReport = averagedHardwareReport;
         }
     }

@@ -66,6 +66,10 @@ namespace resurec.Stores
             _recordings.Add(recording);
             OnRecordingMade(recording);
         }
+        public async Task EditRecording(Guid id, string name)
+        {
+            //todo: implement
+        }
         private void OnRecordingMade(Recording recording)
         {
             RecordingMade?.Invoke(recording);

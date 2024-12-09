@@ -35,9 +35,11 @@ namespace resurec.Services.RecordingProviders
         private static Recording ToRecording(RecordingDTO dto)
         {
             return new Recording(
-                dto.Equals(Guid.Empty) ? Guid.NewGuid() : dto.Id,
+                dto.Id,
+                dto.Name,
                 dto.StartTime,
                 dto.EndTime,
+                dto.Duration,
                 new AveragedHardwareReport(
                     dto.CpuUsage,
                     dto.CpuTemperature,

@@ -14,6 +14,7 @@ namespace resurec.ViewModels
     public class RecordingViewModel : ViewModelBase
     {
         private readonly Recording _recording;
+        public Guid Id => _recording.Id;
         private string _name;
         public string Name
         {
@@ -43,14 +44,14 @@ namespace resurec.ViewModels
             }
         }
 
-        public RecordingViewModel(Recording recording)
+        public RecordingViewModel(Recording recording, RecorderStore recorderStore)
         {
             _recording = recording;
             _name = recording.Name;
             HardwareReport = new HardwareReportViewModel(recording.AveragedHardwareReport);
 
             StartEditingCommand = new StartEditingCommand(this);
-            StopEditingCommand = new StopEditingCommand(this);
+            StopEditingCommand = new StopEditingCommand(this, recorderStore);
         }
     }
 }

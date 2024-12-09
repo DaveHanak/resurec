@@ -1,4 +1,5 @@
-﻿using resurec.Services.RecordingProviders;
+﻿using resurec.Services.RecordingEditors;
+using resurec.Services.RecordingProviders;
 using resurec.Services.RecordingRemovers;
 using System;
 using System.Collections.Generic;
@@ -11,11 +12,13 @@ namespace resurec.Models
     public class RecordingHistory
     {
         private readonly IRecordingProvider _recordingProvider;
+        private readonly IRecordingEditor _recordingEditor;
         private readonly IRecordingRemover _recordingRemover;
         
-        public RecordingHistory(IRecordingProvider recordingProvider, IRecordingRemover recordingRemover)
+        public RecordingHistory(IRecordingProvider recordingProvider, IRecordingEditor recordingEditor, IRecordingRemover recordingRemover)
         {
             _recordingProvider = recordingProvider;
+            _recordingEditor = recordingEditor;
             _recordingRemover = recordingRemover;
         }
 
@@ -24,9 +27,9 @@ namespace resurec.Models
             return await _recordingProvider.GetRecordings();
         }
 
-        public async Task RemoveRecording(string recordingName)
+        public async Task RemoveRecording(Guid id)
         {
-            await _recordingRemover.RemoveRecording(recordingName);
+            await _recordingRemover.RemoveRecording(id);
         }
     }
 }

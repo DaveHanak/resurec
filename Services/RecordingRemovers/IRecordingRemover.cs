@@ -9,6 +9,6 @@ namespace resurec.Services.RecordingRemovers
 {
     public interface IRecordingRemover
     {
-        Task RemoveRecording(string recordingName);
+        Task RemoveRecording(Guid id);
     }
 }
