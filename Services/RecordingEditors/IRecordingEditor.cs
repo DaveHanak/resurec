@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 
 namespace resurec.Services.RecordingEditors
 {
-    internal interface IRecordingEditor
+    public interface IRecordingEditor
     {
+        Task EditRecording(Guid id, string name);
     }
 }

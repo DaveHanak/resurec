@@ -17,6 +17,8 @@ namespace resurec.Stores
         public IEnumerable<Recording> Recordings => _recordings;
 
         public event Action<Recording>? RecordingMade;
+        public event Action<Recording>? RecordingEdited;
+        public event Action<Recording>? RecordingRemoved;
 
         public RecorderStore(Recorder recorder)
         {
@@ -68,11 +70,29 @@ namespace resurec.Stores
         }
         public async Task EditRecording(Guid id, string name)
         {
-            //todo: implement
+            var recording = _recordings.Find(r => r.Id == id) ?? throw new KeyNotFoundException("Recording not found.");
+            await _recorder.EditRecording(id, name);
+            recording.Name = name;
+            OnRecordingEdited(recording);
+        }
+        public async Task RemoveRecording(Guid id)
+        {
+            var recording = _recordings.Find(r => r.Id == id) ?? throw new KeyNotFoundException("Recording not found.");
+            await _recorder.RemoveRecording(id);
+            _recordings.Remove(recording);
+            OnRecordingRemoved(recording);
         }
         private void OnRecordingMade(Recording recording)
         {
             RecordingMade?.Invoke(recording);
+        }
+        private void OnRecordingEdited(Recording recording)
+        {
+            RecordingEdited?.Invoke(recording);
+        }
+        private void OnRecordingRemoved(Recording recording)
+        {
+            RecordingRemoved?.Invoke(recording);
         }
 
         private async Task Initialize()

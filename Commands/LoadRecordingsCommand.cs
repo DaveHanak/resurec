@@ -10,32 +10,32 @@ namespace resurec.Commands
 {
     public class LoadRecordingsCommand : AsyncCommandBase
     {
-        private readonly RecordingHistoryViewModel _viewModel;
+        private readonly RecordingHistoryViewModel _recordingHistoryViewModel;
         private readonly RecorderStore _recorderStore;
 
-        public LoadRecordingsCommand(RecordingHistoryViewModel viewModel, RecorderStore recorderStore)
+        public LoadRecordingsCommand(RecordingHistoryViewModel recordingHistoryViewModel, RecorderStore recorderStore)
         {
-            _viewModel = viewModel;
+            _recordingHistoryViewModel = recordingHistoryViewModel;
             _recorderStore = recorderStore;
         }
 
         public override async Task ExecuteAsync(object? parameter)
         {
-            _viewModel.ErrorMessage = string.Empty;
-            _viewModel.IsLoading = true;
+            _recordingHistoryViewModel.ErrorMessage = string.Empty;
+            _recordingHistoryViewModel.IsLoading = true;
 
             try
             {
                 await _recorderStore.Load();
 
-                _viewModel.UpdateRecordings(_recorderStore.Recordings);
+                _recordingHistoryViewModel.UpdateRecordings(_recorderStore.Recordings);
             }
             catch (Exception)
             {
-                _viewModel.ErrorMessage = "Failed to load recordings.";
+                _recordingHistoryViewModel.ErrorMessage = "Failed to load recordings.";
             }
 
-            _viewModel.IsLoading = false;
+            _recordingHistoryViewModel.IsLoading = false;
         }
     }
 }

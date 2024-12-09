@@ -20,7 +20,6 @@ namespace resurec.ViewModels
         private readonly ObservableCollection<RecordingViewModel> _recordings;
 
         public IEnumerable<RecordingViewModel> Recordings => _recordings;
-
         public bool HasRecordings => _recordings.Any();
 
         private string? _errorMessage;
@@ -53,6 +52,7 @@ namespace resurec.ViewModels
             }
         }
         public ICommand LoadRecordingsCommand { get; }
+        public ICommand RemoveRecordingCommand { get; }
         public ICommand NavigateCommand { get; }
         public RecordingHistoryViewModel(RecorderStore recorderStore, NavigationService<ResurecViewModel> resurecNavigationService)
         {
@@ -61,8 +61,11 @@ namespace resurec.ViewModels
 
             LoadRecordingsCommand = new LoadRecordingsCommand(this, recorderStore);
             NavigateCommand = new NavigateCommand<ResurecViewModel>(resurecNavigationService);
+            RemoveRecordingCommand = new RemoveRecordingCommand(this, recorderStore);
 
             _recorderStore.RecordingMade += OnRecordingMade;
+            _recorderStore.RecordingEdited += OnRecordingEdited;
+            _recorderStore.RecordingRemoved += OnRecordingRemoved;
             _recordings.CollectionChanged += OnRecordingsChanged;
         }
 
@@ -70,6 +73,15 @@ namespace resurec.ViewModels
         {
             RecordingViewModel recordingViewModel = new(recording, _recorderStore);
             _recordings.Add(recordingViewModel);
+        }
+        private void OnRecordingEdited(Recording recording) {}
+        private void OnRecordingRemoved(Recording recording)
+        {
+            RecordingViewModel? recordingViewModel = _recordings.FirstOrDefault(r => r.Id == recording.Id);
+            if (recordingViewModel != null)
+            {
+                _recordings.Remove(recordingViewModel);
+            }
         }
 
         public static RecordingHistoryViewModel LoadViewModel(RecorderStore recorderStore, NavigationService<ResurecViewModel> resurecNavigationService)
@@ -100,6 +112,10 @@ namespace resurec.ViewModels
         public override void Dispose()
         {
             _recorderStore.RecordingMade -= OnRecordingMade;
+            _recorderStore.RecordingEdited -= OnRecordingEdited;
+            _recorderStore.RecordingRemoved -= OnRecordingRemoved;
+            _recordings.CollectionChanged -= OnRecordingsChanged;
+
             base.Dispose();
         }
     }

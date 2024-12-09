@@ -26,7 +26,10 @@ namespace resurec.Models
         {
             return await _recordingProvider.GetRecordings();
         }
-
+        public async Task EditRecording(Guid id, string name)
+        {
+            await _recordingEditor.EditRecording(id, name);
+        }
         public async Task RemoveRecording(Guid id)
         {
             await _recordingRemover.RemoveRecording(id);

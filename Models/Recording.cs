@@ -5,7 +5,7 @@ namespace resurec.Models
     public class Recording
     {
         public Guid Id { get; }
-        public string Name { get; }
+        public string Name { get; set; }
         public DateTime StartTime { get; }
         public DateTime EndTime { get; }
         public TimeSpan Duration { get; }

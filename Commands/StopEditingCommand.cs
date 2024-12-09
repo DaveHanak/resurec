@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace resurec.Commands
 {
-    public class StopEditingCommand : CommandBase
+    public class StopEditingCommand : AsyncCommandBase
     {
         private readonly RecordingViewModel? _recordingViewModel;
         private readonly RecorderStore? _recorderStore;
@@ -19,7 +19,7 @@ namespace resurec.Commands
             _recorderStore = recorderStore;
         }
 
-        public override void Execute(object? parameter)
+        public override async Task ExecuteAsync(object? parameter)
         {
             if (_recorderStore == null || _recordingViewModel == null)
             {
@@ -28,7 +28,7 @@ namespace resurec.Commands
 
             _recordingViewModel.IsEditing = false;
 
-            _recorderStore.EditRecording(_recordingViewModel.Id, _recordingViewModel.Name);
+            await _recorderStore.EditRecording(_recordingViewModel.Id, _recordingViewModel.Name);
         }
     }
 }

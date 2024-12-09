@@ -25,18 +25,25 @@
             </Grid.ColumnDefinitions>
 
             <TextBlock
+                Margin="20,20,0,0"
                 Grid.Column="0"
+                FontSize="40"
+                Foreground="White"
                 Text="Recording History" />
 
             <Button
+                Margin="0,20,20,0"
                 Grid.Column="1"
+                FontSize="40"
+                Background="#E1E1E1"
                 Command="{Binding NavigateCommand}"
-                Content="Go back" />
+                Content="Back" />
         </Grid>
 
         <Grid Grid.Row="1" Margin="0,25,0,0">
             <TextBlock
                 Text="Please wait..."
+                FontSize="20"
                 Visibility="{Binding IsLoading, Converter={StaticResource BooleanToVisibilityConverter}}"
             />
 
@@ -49,9 +56,16 @@
 
                 <Grid Visibility="{Binding HasErrorMessage, Converter={StaticResource InverseBooleanToVisibilityConverter}}">
 
-                    <TextBlock Text="No recordings have been made." Visibility="{Binding HasRecordings, Converter={StaticResource InverseBooleanToVisibilityConverter}}" />
+                    <TextBlock
+                        Text="No resource usage recordings have been made yet..."
+                        FontSize="20"
+                        Visibility="{Binding HasRecordings, Converter={StaticResource InverseBooleanToVisibilityConverter}}"
+                        Foreground="White"/>
 
-                    <ListView ItemsSource="{Binding Recordings}" Visibility="{Binding HasRecordings, Converter={StaticResource BooleanToVisibilityConverter}}">
+                    <ListView FontSize="20" ItemsSource="{Binding Recordings}" Visibility="{Binding HasRecordings, Converter={StaticResource BooleanToVisibilityConverter}}">
+                        <ListView.InputBindings>
+                            <KeyBinding Key="Delete" Command="{Binding RemoveRecordingCommand}" CommandParameter="{Binding SelectedItem, RelativeSource={RelativeSource AncestorType=ListView}}" />
+                        </ListView.InputBindings>
                         <ListView.ItemContainerStyle>
                             <Style TargetType="ListViewItem">
                                 <Setter Property="HorizontalContentAlignment" Value="Stretch" />
@@ -64,8 +78,8 @@
                                     <GridViewColumn.CellTemplate>
                                         <DataTemplate>
                                             <Grid>
-                                                <TextBlock x:Name="NameTextBlock" HorizontalAlignment="Center" Text="{Binding Name}" Visibility="{Binding IsEditing, Converter={StaticResource InverseBooleanToVisibilityConverter}}" />
-                                                <TextBox x:Name="NameTextBox" HorizontalAlignment="Center" Text="{Binding Name, UpdateSourceTrigger=PropertyChanged}" Visibility="{Binding IsEditing, Converter={StaticResource BooleanToVisibilityConverter}}">
+                                                <TextBlock HorizontalAlignment="Center" Text="{Binding Name}" Visibility="{Binding IsEditing, Converter={StaticResource InverseBooleanToVisibilityConverter}}" />
+                                                <TextBox HorizontalAlignment="Center" Text="{Binding Name, UpdateSourceTrigger=PropertyChanged}" Visibility="{Binding IsEditing, Converter={StaticResource BooleanToVisibilityConverter}}">
                                                     <TextBox.InputBindings>
                                                         <KeyBinding Key="Enter" Command="{Binding StopEditingCommand}" />
                                                     </TextBox.InputBindings>
@@ -134,7 +148,7 @@
                                 <GridViewColumn Header="Avg RAM Usage">
                                     <GridViewColumn.CellTemplate>
                                         <DataTemplate>
-                                            <TextBlock Padding="0,0,20,0" Text="{Binding HardwareReport.GpuUsage}" />
+                                            <TextBlock Padding="0,0,20,0" Text="{Binding HardwareReport.RamUsage}" />
                                         </DataTemplate>
                                     </GridViewColumn.CellTemplate>
                                 </GridViewColumn>

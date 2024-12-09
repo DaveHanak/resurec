@@ -63,9 +63,14 @@ namespace resurec.ViewModels
             NavigateCommand = new NavigateCommand<RecordingHistoryViewModel>(recordingHistoryNavigationService);
 
             _globalTimer.AddCallback(UpdateStatistics);
+            _globalTimer.StateChanged += OnGlobalTimerStateChanged;
 
-            IsMonitoring = true;
-            IsRecording = false;
+            IsMonitoring = _globalTimer.IsStarted;
+            IsRecording = _recorder.IsRecording;
+        }
+        private void OnGlobalTimerStateChanged()
+        {
+            IsMonitoring = _globalTimer.IsStarted;
         }
 
         private bool _isMonitoring;
@@ -148,6 +153,7 @@ namespace resurec.ViewModels
         public override void Dispose()
         {
             _globalTimer.RemoveCallback(UpdateStatistics);
+            _globalTimer.StateChanged -= OnGlobalTimerStateChanged;
         }
     }
 }

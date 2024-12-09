@@ -16,11 +16,14 @@ namespace resurec.Models
         private readonly DispatcherTimer _timer = new() { Interval = TimeSpan.FromSeconds(1) };
         public GlobalTimer() { }
         public bool IsStarted => _timer.IsEnabled;
+
+        public event Action? StateChanged;
         public void Start()
         { 
             if (!_timer.IsEnabled)
             {
                 _timer.Start();
+                OnStateChanged();
             }
         }
 
@@ -29,6 +32,7 @@ namespace resurec.Models
             if (_timer.IsEnabled)
             {
                 _timer.Stop();
+                OnStateChanged();
             }
         }
 
@@ -40,6 +44,11 @@ namespace resurec.Models
         public void RemoveCallback(EventHandler callback)
         {
             _timer.Tick -= callback;
+        }
+
+        private void OnStateChanged()
+        {
+            StateChanged?.Invoke();
         }
     }
 }

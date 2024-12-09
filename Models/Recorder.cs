@@ -69,16 +69,14 @@ namespace resurec.Models
             {
                 throw new NotRecordingException();
             }
-            _snapshotCache.StopRecording();
+
             var timeStopped = DateTime.Now;
-
             var duration = timeStopped - _timeStarted;
-
             if (duration.TotalSeconds < 2)
             {
                 throw new StoppedRecordingTooSoonException();
             }
-
+            _snapshotCache.StopRecording();
             var finalHardwareReport = new AveragedHardwareReport(_snapshotCache.RecordedHardwareReports);
             _snapshotCache.Clear();
 
@@ -94,6 +92,11 @@ namespace resurec.Models
             return recording;
         }
         
+        public async Task EditRecording(Guid id, string name)
+        {
+            await _recordingHistory.EditRecording(id, name);
+        }
+
         public async Task RemoveRecording(Guid id)
         {
             await _recordingHistory.RemoveRecording(id);
