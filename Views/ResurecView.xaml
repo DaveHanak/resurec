@@ -1,0 +1,211 @@
+﻿<UserControl x:Class="resurec.Views.ResurecView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:resurec.Views"
+             xmlns:lvc="clr-namespace:LiveChartsCore.SkiaSharpView.WPF;assembly=LiveChartsCore.SkiaSharpView.WPF"
+             mc:Ignorable="d" 
+             d:DesignHeight="900" d:DesignWidth="1600"
+             Background="#7d7d7d">
+    <UserControl.Resources>
+        <Style TargetType="lvc:PieChart">
+            <Setter Property="InitialRotation" Value="-225"/>
+            <Setter Property="MaxAngle" Value="270"/>
+            <Setter Property="MinValue" Value="0"/>
+            <Setter Property="MaxValue" Value="100"/>
+            <Setter Property="TooltipPosition" Value="Hidden"/>
+            <Setter Property="AnimationsSpeed" Value="0"/>
+            <Setter Property="EasingFunction" Value="{x:Null}"/>
+        </Style>
+        <Style TargetType="lvc:CartesianChart">
+            <Setter Property="TooltipPosition" Value="Hidden"/>
+            <Setter Property="AnimationsSpeed" Value="0"/>
+            <Setter Property="EasingFunction" Value="{x:Null}"/>
+        </Style>
+    </UserControl.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+
+            <ColumnDefinition Width="*" />
+
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+
+        <lvc:CartesianChart
+            Grid.Row="0"
+            Grid.RowSpan="2"
+            Grid.Column="0"
+            Grid.ColumnSpan="3"
+            Series="{Binding CpuUsage.Series}"
+            XAxes="{Binding CpuUsage.XAxes}"
+            YAxes="{Binding CpuUsage.YAxes}"
+            DrawMarginFrame="{Binding CpuUsage.Frame}"
+        />
+
+        <lvc:CartesianChart
+            Grid.Row="0"
+            Grid.RowSpan="2"
+            Grid.Column="4"
+            Grid.ColumnSpan="3"
+            Series="{Binding GpuUsage.Series}"
+            XAxes="{Binding GpuUsage.XAxes}"
+            YAxes="{Binding GpuUsage.YAxes}"
+            DrawMarginFrame="{Binding GpuUsage.Frame}"
+        />
+
+
+        <lvc:PieChart
+            Grid.Row="2"
+            Grid.RowSpan="2"
+            Grid.Column="0"
+            Grid.ColumnSpan="2"
+            Series="{Binding CpuTemperature.Series}"
+        />
+
+        <Grid
+            Grid.Row="0"
+            Grid.RowSpan="2"
+            Grid.Column="3">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <TextBlock
+                Grid.Row="0"
+                Text="RAM"
+                HorizontalAlignment="Center"
+                FontSize="40"
+                Foreground="White"
+            />
+            <lvc:PieChart
+                Grid.Row="1"
+                Series="{Binding RamUsage.Series}"
+            />
+        </Grid>
+        
+        <Grid
+            Grid.Row="2"
+            Grid.Column="2"
+            Grid.RowSpan="2"
+            Grid.ColumnSpan="3">
+
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+
+            <Button
+                Grid.Row="1"
+                Grid.Column="2"
+                Grid.RowSpan="3"
+                Grid.ColumnSpan="5"
+                FontSize="30">
+                <Button.Style>
+                    <Style BasedOn="{StaticResource {x:Type Button}}" TargetType="Button">
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding IsRecording}" Value="False">
+                                <Setter Property="Content" Value="Start Recording"/>
+                                <Setter Property="Background" Value="#E1E1E1"/>
+                                <Setter Property="Command" Value="{Binding StartRecordingCommand}"/>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding IsRecording}" Value="True">
+                                <Setter Property="Content" Value="Finish Recording"/>
+                                <Setter Property="Background" Value="#E10000"/>
+                                <Setter Property="Command" Value="{Binding StopRecordingCommand}"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Button.Style>
+            </Button>
+
+            <Button
+                Grid.Row="5"
+                Grid.Column="1"
+                Grid.ColumnSpan="3"
+                FontSize="20"
+                Content="View Recordings"
+                Command="{Binding NavigateCommand}">
+            </Button>
+
+            <Button
+                Grid.Row="5"
+                Grid.Column="5"
+                Grid.ColumnSpan="3"
+                FontSize="20"
+                Content="Cancel Recording"
+                Command="{Binding CancelRecordingCommand}">
+            </Button>
+
+            <Button
+                Grid.Row="7"
+                Grid.Column="1"
+                Grid.ColumnSpan="3"
+                FontSize="20">
+                <Button.Style>
+                    <Style BasedOn="{StaticResource {x:Type Button}}" TargetType="Button">
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding IsMonitoring}" Value="False">
+                                <Setter Property="Content" Value="Resume Monitor"/>
+                                <Setter Property="Background" Value="#00E100"/>
+                                <Setter Property="Command" Value="{Binding StartMonitoringCommand}"/>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding IsMonitoring}" Value="True">
+                                <Setter Property="Content" Value="Pause Monitor"/>
+                                <Setter Property="Background" Value="#E1E1E1"/>
+                                <Setter Property="Command" Value="{Binding StopMonitoringCommand}"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Button.Style>
+            </Button>
+
+            <Button
+                Grid.Row="7"
+                Grid.Column="5"
+                Grid.ColumnSpan="3"
+                FontSize="20"
+                Content="Clear Monitor"
+                Command="{Binding ClearMonitorCommand}">
+            </Button>
+        </Grid>
+
+        <lvc:PieChart
+            Grid.Row="2"
+            Grid.RowSpan="2"
+            Grid.Column="5"
+            Grid.ColumnSpan="2"
+            Series="{Binding GpuTemperature.Series}"
+        />
+    </Grid>
+</UserControl>
