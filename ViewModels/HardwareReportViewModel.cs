@@ -24,5 +24,11 @@ namespace resurec.ViewModels
         {
             _hardwareReport = hardwareReport;
         }
+
+        public float GetCpuUsage() => _hardwareReport.CpuUsage;
+        public float GetCpuTemperature() => _hardwareReport.CpuTemperature;
+        public float GetRamUsage() => _hardwareReport.RamUsage;
+        public float GetGpuUsage() => _hardwareReport.GpuUsage;
+        public float GetGpuTemperature() => _hardwareReport.GpuTemperature;
     }
 }
